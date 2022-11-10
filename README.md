@@ -1,1 +1,1 @@
-# highload-architect
+# OTUS (Highload Architect) https://otus.ru/lessons/highloadarchitect
