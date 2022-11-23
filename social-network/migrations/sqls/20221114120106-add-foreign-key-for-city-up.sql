@@ -1,0 +1,1 @@
+ALTER TABLE users ADD COLUMN city_id INT, ADD CONSTRAINT FOREIGN KEY (city_id) REFERENCES cities(id);

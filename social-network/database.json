@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "host": { "ENV" : "MYSQL_HOST" },
+    "user": { "ENV" : "MYSQL_USER" },
+    "password" : { "ENV" : "MYSQL_ROOT_PASSWORD" },
+    "database": "social_network",
+    "driver": "mysql",
+    "multipleStatements": true
+  },
+  "sql-file" : true
+}

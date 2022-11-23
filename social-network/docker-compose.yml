@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  dev:
+    container_name: social-network_dev
+    image: nestjs-api-dev:1.0.0
+    build:
+      context: .
+      target: development
+      dockerfile: ./Dockerfile
+    command: npm run start:debug
+    ports:
+      - 3001:3001
+      - 9229:9229
+    networks:
+      - nestjs-network
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+    depends_on:
+      - mysql
+  mysql:
+    container_name: social_network_db
+    image: mysql:5.5
+    env_file:
+      - .env
+    networks:
+      - nestjs-network
+    environment:
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DB_NAME}
+    volumes:
+      - "./mysql/data:/var/lib/mysql:delegated"
+      - "./mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf"
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "${MYSQL_PORT}:3306"
+networks:
+  nestjs-network:
