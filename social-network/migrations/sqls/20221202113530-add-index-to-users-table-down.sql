@@ -1,0 +1,1 @@
+CREATE INDEX search_index on users('first_name', 'last_name');

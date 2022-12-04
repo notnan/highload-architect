@@ -5,20 +5,20 @@ import {
 	Injectable,
 } from '@nestjs/common';
 import { DatabaseService } from '../db/database.service';
-import { AuthService } from '../auth/auth.service';
 import { format } from 'mysql2';
 import { ALREADY_FRIENDS, USER_NOT_FOUND_ERROR } from './friendship.constants';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class FriendshipService {
 	constructor(
 		private readonly repository: DatabaseService,
-		private readonly authService: AuthService,
+		private readonly usersService: UsersService,
 	) {}
 
 	public async addAsFriendReq(email: string, userId: string) {
-		const [result] = await this.authService.findByEmail(email);
-		const user = await this.authService.findById(userId);
+		const [result] = await this.usersService.findByEmail(email);
+		const user = await this.usersService.findById(userId);
 
 		if (!user) {
 			throw new HttpException(USER_NOT_FOUND_ERROR, HttpStatus.NOT_FOUND);
@@ -51,9 +51,9 @@ export class FriendshipService {
 	}
 
 	public async confirmFriendship(email: string, userId: string) {
-		const [result] = await this.authService.findByEmail(email);
+		const [result] = await this.usersService.findByEmail(email);
 
-		const user = await this.authService.findById(userId);
+		const user = await this.usersService.findById(userId);
 
 		if (!user.length) {
 			throw new HttpException(USER_NOT_FOUND_ERROR, HttpStatus.NOT_FOUND);
