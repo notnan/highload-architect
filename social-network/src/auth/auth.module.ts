@@ -21,6 +21,7 @@ import { getJwtConfig } from '../configs/jwt.config';
 			useFactory: getJwtConfig,
 		}),
 		PassportModule,
+		UsersModule,
 	],
 	controllers: [AuthController],
 	providers: [AuthService, JwtStratagy],

@@ -12,14 +12,14 @@ import {
 import { AuthService } from './auth.service';
 import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
 import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
-import { JwtAuthGuard } from './guards/jwt.guard';
+import { UsersService } from "../users/users.service";
 
 @Controller({
 	path: 'auth',
 	version: '1',
 })
 export class AuthController {
-	constructor(private readonly authService: AuthService) {}
+	constructor(private readonly authService: AuthService, private readonly usersService: UsersService) {}
 
 	@Post('login')
 	@UsePipes(new ValidationPipe())
@@ -33,6 +33,6 @@ export class AuthController {
 	@UsePipes(new ValidationPipe())
 	@HttpCode(HttpStatus.OK)
 	public async registser(@Body() registerLoginDto: AuthRegisterLoginDto) {
-		return this.authService.createUser(registerLoginDto);
+		return this.usersService.createUser(registerLoginDto);
 	}
 }
